@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import logoImg from "@/assets/logowithtext.png";
+import warbornNormal from "@/assets/warborn-normal.png";
 
 const navLinks = [
   { label: "INICIO", href: "#hero" },
@@ -14,9 +14,21 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("#hero");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
+      // Track active section
+      const sections = navLinks.map(l => l.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.getBoundingClientRect().top <= 120) {
+          setActiveSection(`#${sections[i]}`);
+          break;
+        }
+      }
+    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -28,72 +40,91 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-6xl ${
+        scrolled
+          ? "glass rounded-2xl shadow-lg shadow-black/20"
+          : "bg-background/30 backdrop-blur-sm rounded-2xl border border-border/30"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-4">
-        <button onClick={() => handleClick("#hero")} className="flex items-center gap-2">
-          <img src={logoImg} alt="Warborn" className="h-8 md:h-10" />
+      <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
+        {/* Logo */}
+        <button onClick={() => handleClick("#hero")} className="flex items-center gap-3 group">
+          <img src={warbornNormal} alt="Warborn" className="h-7 md:h-9 transition-transform duration-300 group-hover:scale-105" />
+          <div className="hidden sm:flex flex-col">
+            <span className="text-[10px] font-heading tracking-[0.3em] text-foreground leading-none">WARBORN</span>
+            <span className="text-[8px] font-heading tracking-[0.2em] text-muted-foreground leading-none">2026</span>
+          </div>
         </button>
 
         {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           {navLinks.map((l) => (
             <button
               key={l.href}
               onClick={() => handleClick(l.href)}
-              className="px-3 py-2 text-xs font-heading tracking-widest text-muted-foreground hover:text-primary transition-colors duration-300 relative group"
+              className={`px-3 py-1.5 text-[10px] font-heading tracking-[0.15em] transition-all duration-300 rounded-lg relative group ${
+                activeSection === l.href
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+              }`}
             >
               {l.label}
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-primary transition-all duration-300 ${
+                activeSection === l.href ? "w-4" : "w-0 group-hover:w-4"
+              }`} />
             </button>
           ))}
         </div>
 
-        <div className="hidden lg:flex items-center gap-3">
+        {/* Desktop actions */}
+        <div className="hidden lg:flex items-center gap-2">
           <a
             href="https://discord.gg/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 border border-border rounded text-xs font-heading tracking-widest text-foreground hover:border-primary hover:text-primary transition-all duration-300"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-heading tracking-[0.15em] text-muted-foreground hover:text-[#5865F2] hover:bg-[#5865F2]/10 transition-all duration-300"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
             DISCORD
           </a>
           <button
             onClick={() => handleClick("#servers")}
-            className="btn-military flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground rounded text-xs font-heading tracking-widest font-bold hover:brightness-110 transition-all duration-300"
+            className="flex items-center gap-2 px-4 py-1.5 bg-primary text-primary-foreground rounded-lg text-[10px] font-heading tracking-[0.15em] font-bold hover:brightness-110 transition-all duration-300 glow-green-sm btn-military"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             JUGAR
           </button>
         </div>
 
         {/* Mobile hamburger */}
         <button className="lg:hidden flex flex-col gap-1.5 p-2" onClick={() => setMobileOpen(!mobileOpen)}>
-          <span className={`w-6 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`w-6 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-          <span className={`w-6 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          <span className={`w-5 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+          <span className={`w-5 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+          <span className={`w-5 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
         </button>
       </div>
 
       {/* Mobile menu */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-500 ${mobileOpen ? "max-h-screen" : "max-h-0"}`}>
-        <div className="bg-background/95 backdrop-blur-md border-t border-border px-4 py-6 flex flex-col gap-2">
+      <div className={`lg:hidden overflow-hidden transition-all duration-500 ${mobileOpen ? "max-h-[500px]" : "max-h-0"}`}>
+        <div className="px-4 py-4 flex flex-col gap-1 border-t border-border/30">
           {navLinks.map((l, i) => (
             <button
               key={l.href}
               onClick={() => handleClick(l.href)}
-              className="text-left px-4 py-3 font-heading tracking-widest text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 rounded transition-all duration-300"
+              className={`text-left px-4 py-2.5 font-heading tracking-[0.15em] text-xs rounded-lg transition-all duration-300 ${
+                activeSection === l.href
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-primary hover:bg-secondary/50"
+              }`}
               style={{ animationDelay: `${i * 0.05}s` }}
             >
               {l.label}
             </button>
           ))}
-          <div className="flex gap-3 mt-4 px-4">
-            <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-3 border border-border rounded font-heading tracking-widest text-xs hover:border-primary transition-colors">DISCORD</a>
-            <button onClick={() => handleClick("#servers")} className="flex-1 text-center px-4 py-3 bg-primary text-primary-foreground rounded font-heading tracking-widest text-xs font-bold">JUGAR</button>
+          <div className="flex gap-2 mt-3 px-2">
+            <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 border border-border rounded-lg font-heading tracking-[0.15em] text-[10px] hover:border-[#5865F2] hover:text-[#5865F2] transition-all">DISCORD</a>
+            <button onClick={() => handleClick("#servers")} className="flex-1 text-center px-4 py-2.5 bg-primary text-primary-foreground rounded-lg font-heading tracking-[0.15em] text-[10px] font-bold">JUGAR</button>
           </div>
         </div>
       </div>

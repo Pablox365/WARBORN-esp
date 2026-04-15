@@ -1,6 +1,7 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import warbornNormal from "@/assets/warborn-normal.png";
-import warbornHardcore from "@/assets/warborn-hardcore.png";
+import warbornHardcore from "@/assets/warborn-hardcore-clean.png";
+import { Users, MapPin, Wifi, Copy, Play } from "lucide-react";
 
 const servers = [
   {
@@ -13,7 +14,7 @@ const servers = [
     maxPlayers: 64,
     map: "Everon",
     online: true,
-    accent: "primary",
+    isNormal: true,
   },
   {
     name: "WARBORN HARDCORE",
@@ -25,7 +26,7 @@ const servers = [
     maxPlayers: 40,
     map: "Arland",
     online: true,
-    accent: "destructive",
+    isNormal: false,
   },
 ];
 
@@ -42,60 +43,61 @@ const ServersSection = () => {
           {servers.map((s, i) => (
             <div
               key={s.name}
-              className={`group relative bg-card border border-border rounded-lg overflow-hidden card-hover transition-all duration-700 ${
+              className={`group relative bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               }`}
               style={{ transitionDelay: `${i * 200 + 300}ms` }}
             >
-              {/* Top accent bar */}
-              <div className={`h-1 ${i === 0 ? "bg-primary" : "bg-red-500"}`} />
+              {/* Top accent bar with gradient */}
+              <div className={`h-1 ${s.isNormal ? "bg-gradient-to-r from-primary/50 via-primary to-primary/50" : "bg-gradient-to-r from-red-500/50 via-red-500 to-red-500/50"}`} />
 
               <div className="p-6 md:p-8">
                 {/* Logo + status */}
                 <div className="flex items-start justify-between mb-6">
-                  <img src={s.logo} alt={s.name} className="h-10 md:h-14" />
-                  <div className="flex items-center gap-2">
+                  <img src={s.logo} alt={s.name} className="h-10 md:h-14 group-hover:scale-105 transition-transform duration-300" />
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10">
                     <span className={`w-2 h-2 rounded-full ${s.online ? "bg-primary animate-status-pulse" : "bg-destructive"}`} />
-                    <span className={`text-xs font-heading tracking-widest ${s.online ? "text-primary" : "text-destructive"}`}>
+                    <span className={`text-[9px] font-heading tracking-[0.15em] ${s.online ? "text-primary" : "text-destructive"}`}>
                       {s.online ? "ONLINE" : "OFFLINE"}
                     </span>
                   </div>
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-heading font-bold mb-1">{s.name}</h3>
-                <p className="text-[10px] font-heading tracking-[0.3em] text-muted-foreground mb-4">{s.subtitle}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{s.description}</p>
+                <h3 className="text-lg md:text-xl font-heading font-bold mb-1">{s.name}</h3>
+                <p className="text-[9px] font-heading tracking-[0.3em] text-muted-foreground mb-4">{s.subtitle}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-body">{s.description}</p>
 
                 {/* Stats grid */}
                 <div className="grid grid-cols-3 gap-3 mb-6">
-                  <StatBox label="JUGADORES" value={`${s.players}/${s.maxPlayers}`} />
-                  <StatBox label="MAPA" value={s.map} />
-                  <StatBox label="PING" value="32ms" />
+                  <StatBox icon={<Users className="w-3.5 h-3.5 text-primary" />} label="JUGADORES" value={`${s.players}/${s.maxPlayers}`} />
+                  <StatBox icon={<MapPin className="w-3.5 h-3.5 text-primary" />} label="MAPA" value={s.map} />
+                  <StatBox icon={<Wifi className="w-3.5 h-3.5 text-primary" />} label="PING" value="32ms" />
                 </div>
 
                 {/* IP */}
-                <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded mb-6">
-                  <span className="text-[10px] font-heading tracking-widest text-muted-foreground">IP:</span>
-                  <code className="text-xs font-mono text-foreground">{s.ip}</code>
+                <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg mb-6 group/ip hover:bg-secondary/70 transition-colors">
+                  <span className="text-[8px] font-heading tracking-[0.15em] text-muted-foreground">IP:</span>
+                  <code className="text-[11px] font-mono-code text-foreground">{s.ip}</code>
                   <button
                     onClick={() => navigator.clipboard.writeText(s.ip)}
-                    className="ml-auto text-muted-foreground hover:text-primary transition-colors"
+                    className="ml-auto text-muted-foreground hover:text-primary transition-all hover:scale-110"
                   >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
+                    <Copy className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
                 {/* CTA */}
-                <button className={`w-full btn-military py-3 rounded font-heading tracking-widest text-sm font-bold transition-all ${i === 0 ? "bg-primary text-primary-foreground glow-green-sm" : "bg-red-600 text-foreground"} hover:brightness-110`}>
+                <button className={`w-full btn-military py-3 rounded-lg font-heading tracking-[0.15em] text-xs font-bold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] ${s.isNormal ? "bg-primary text-primary-foreground glow-green-sm" : "bg-red-600 text-foreground"} hover:brightness-110`}>
+                  <Play className="w-3.5 h-3.5" />
                   CONECTARSE
                 </button>
               </div>
 
               {/* HUD corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary/30" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary/30" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary/30" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary/30" />
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
             </div>
           ))}
         </div>
@@ -104,31 +106,32 @@ const ServersSection = () => {
   );
 };
 
-const StatBox = ({ label, value }: { label: string; value: string }) => (
-  <div className="text-center p-3 bg-secondary/30 rounded">
-    <div className="text-[9px] font-heading tracking-widest text-muted-foreground mb-1">{label}</div>
-    <div className="text-sm font-heading font-bold">{value}</div>
+const StatBox = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="text-center p-3 bg-secondary/30 rounded-lg hover:bg-secondary/50 transition-colors">
+    <div className="flex justify-center mb-1">{icon}</div>
+    <div className="text-[8px] font-heading tracking-[0.15em] text-muted-foreground mb-0.5">{label}</div>
+    <div className="text-xs font-heading font-bold">{value}</div>
   </div>
 );
 
 export const SectionHeader = ({ visible, label, title, subtitle }: { visible: boolean; label: string; title: string; subtitle: string }) => (
   <div className="text-center">
     <span
-      className={`inline-block text-[10px] font-heading tracking-[0.4em] text-primary mb-3 transition-all duration-700 ${
+      className={`inline-block text-[9px] font-heading tracking-[0.4em] text-primary mb-3 transition-all duration-700 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
       // {label}
     </span>
     <h2
-      className={`text-3xl md:text-5xl font-heading font-bold mb-3 transition-all duration-700 delay-100 ${
+      className={`text-2xl sm:text-3xl md:text-5xl font-heading font-bold mb-3 transition-all duration-700 delay-100 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
       {title}
     </h2>
     <p
-      className={`text-sm text-muted-foreground transition-all duration-700 delay-200 ${
+      className={`text-xs sm:text-sm text-muted-foreground font-body transition-all duration-700 delay-200 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
