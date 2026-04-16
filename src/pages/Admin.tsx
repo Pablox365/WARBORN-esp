@@ -154,11 +154,11 @@ function useCrud(table: "products" | "mods" | "roadmap_items" | "announcements")
   const upsert = useMutation({
     mutationFn: async (item: any) => {
       if (item.id) {
-        const { id: _id, created_at: _ca, updated_at: _ua, ...rest } = item;
+        const { id, created_at: _ca, updated_at: _ua, ...rest } = item;
         const { error } = await supabase.from(table).update(rest).eq("id", id);
         if (error) throw error;
       } else {
-        const { id: _id, created_at: _ca, updated_at: _ua, ...rest } = item;
+        const { created_at: _ca2, updated_at: _ua2, id: _id2, ...rest } = item;
         const { error } = await supabase.from(table).insert(rest);
         if (error) throw error;
       }
