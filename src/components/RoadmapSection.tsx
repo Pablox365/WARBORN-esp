@@ -1,17 +1,8 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionHeader } from "./ServersSection";
 import { CheckCircle2, FlaskConical, Cog } from "lucide-react";
-
-const items = [
-  { status: "done", title: "Servidor Normal", desc: "Lanzamiento del servidor casual/semi-realismo" },
-  { status: "done", title: "Servidor Hardcore", desc: "Modo realismo táctico avanzado" },
-  { status: "done", title: "Sistema de Mods", desc: "Workshop propio con mods curados" },
-  { status: "testing", title: "Web Oficial", desc: "Plataforma central de la comunidad" },
-  { status: "testing", title: "Bot Discord Avanzado", desc: "Gestión automática del estado de servidores" },
-  { status: "dev", title: "Sistema de Eventos", desc: "Operaciones militares organizadas" },
-  { status: "dev", title: "Panel de Usuario", desc: "Perfil, estadísticas y logros" },
-  { status: "dev", title: "Tienda Avanzada", desc: "Merch con integración de pagos" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const statusConfig: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
   done: { label: "COMPLETADO", color: "text-primary", bg: "bg-primary", icon: <CheckCircle2 className="w-4 h-4" /> },
@@ -21,6 +12,17 @@ const statusConfig: Record<string, { label: string; color: string; bg: string; i
 
 const RoadmapSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+
+  const { data: items } = useQuery({
+    queryKey: ["roadmap_items"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("roadmap_items").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const roadmapItems = items || [];
 
   return (
     <section id="roadmap" className="relative py-24 md:py-32 bg-card/30" ref={ref}>
@@ -39,12 +41,12 @@ const RoadmapSection = () => {
         <div className="relative max-w-2xl mx-auto">
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-border to-border md:-translate-x-px" />
 
-          {items.map((item, i) => {
-            const cfg = statusConfig[item.status];
+          {roadmapItems.map((item, i) => {
+            const cfg = statusConfig[item.status] || statusConfig.dev;
             const isLeft = i % 2 === 0;
             return (
               <div
-                key={item.title}
+                key={item.id}
                 className={`relative flex items-start mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"} ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
                 style={{ transitionDelay: `${i * 150 + 400}ms` }}
               >
@@ -59,7 +61,7 @@ const RoadmapSection = () => {
                       <span className={`text-[8px] font-heading tracking-[0.15em] ${cfg.color}`}>{cfg.label}</span>
                     </div>
                     <h4 className="text-xs font-heading font-bold tracking-wider mt-1">{item.title}</h4>
-                    <p className="text-[11px] text-muted-foreground mt-1 font-body">{item.desc}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 font-body">{item.description}</p>
                   </div>
                 </div>
               </div>

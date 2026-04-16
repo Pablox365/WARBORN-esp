@@ -48,11 +48,10 @@ const ServersSection = () => {
               }`}
               style={{ transitionDelay: `${i * 200 + 300}ms` }}
             >
-              {/* Top accent bar with gradient */}
+              {/* Top accent bar */}
               <div className={`h-1 ${s.isNormal ? "bg-gradient-to-r from-primary/50 via-primary to-primary/50" : "bg-gradient-to-r from-red-500/50 via-red-500 to-red-500/50"}`} />
 
               <div className="p-6 md:p-8">
-                {/* Logo + status */}
                 <div className="flex items-start justify-between mb-6">
                   <img src={s.logo} alt={s.name} className="h-10 md:h-14 group-hover:scale-105 transition-transform duration-300" />
                   <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10">
@@ -67,14 +66,12 @@ const ServersSection = () => {
                 <p className="text-[9px] font-heading tracking-[0.3em] text-muted-foreground mb-4">{s.subtitle}</p>
                 <p className="text-xs text-muted-foreground leading-relaxed mb-6 font-body">{s.description}</p>
 
-                {/* Stats grid */}
                 <div className="grid grid-cols-3 gap-3 mb-6">
                   <StatBox icon={<Users className="w-3.5 h-3.5 text-primary" />} label="JUGADORES" value={`${s.players}/${s.maxPlayers}`} />
                   <StatBox icon={<MapPin className="w-3.5 h-3.5 text-primary" />} label="MAPA" value={s.map} />
                   <StatBox icon={<Wifi className="w-3.5 h-3.5 text-primary" />} label="PING" value="32ms" />
                 </div>
 
-                {/* IP */}
                 <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg mb-6 group/ip hover:bg-secondary/70 transition-colors">
                   <span className="text-[8px] font-heading tracking-[0.15em] text-muted-foreground">IP:</span>
                   <code className="text-[11px] font-mono-code text-foreground">{s.ip}</code>
@@ -86,18 +83,11 @@ const ServersSection = () => {
                   </button>
                 </div>
 
-                {/* CTA */}
                 <button className={`w-full btn-military py-3 rounded-lg font-heading tracking-[0.15em] text-xs font-bold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] ${s.isNormal ? "bg-primary text-primary-foreground glow-green-sm" : "bg-red-600 text-foreground"} hover:brightness-110`}>
                   <Play className="w-3.5 h-3.5" />
                   CONECTARSE
                 </button>
               </div>
-
-              {/* HUD corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
             </div>
           ))}
         </div>

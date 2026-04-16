@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionHeader } from "./ServersSection";
 import { Map, Crosshair, Truck, Code, Package, Download } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const categories = ["TODOS", "OBLIGATORIO", "MAPAS", "ARMAS", "VEHÍCULOS", "SCRIPTS"];
 
@@ -12,24 +14,23 @@ const categoryIcons: Record<string, React.ReactNode> = {
   SCRIPTS: <Code className="w-5 h-5" />,
 };
 
-const modsData = [
-  { name: "Everon Life", category: "MAPAS", required: true, desc: "Mapa principal del servidor Normal" },
-  { name: "RHS Weapons", category: "ARMAS", required: true, desc: "Pack de armas realistas" },
-  { name: "ACE Advanced", category: "SCRIPTS", required: true, desc: "Sistema médico y balística avanzada" },
-  { name: "RHS Vehicles", category: "VEHÍCULOS", required: true, desc: "Vehículos militares realistas" },
-  { name: "Arland Terrain", category: "MAPAS", required: false, desc: "Terreno alternativo para Hardcore" },
-  { name: "Radio Mod", category: "SCRIPTS", required: false, desc: "Sistema de comunicación por radio" },
-  { name: "NVG Enhanced", category: "ARMAS", required: false, desc: "Visión nocturna mejorada" },
-  { name: "Transport Pack", category: "VEHÍCULOS", required: false, desc: "Vehículos de transporte adicionales" },
-];
-
 const ModsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [filter, setFilter] = useState("TODOS");
 
-  const filtered = filter === "TODOS" ? modsData
-    : filter === "OBLIGATORIO" ? modsData.filter(m => m.required)
-    : modsData.filter(m => m.category === filter);
+  const { data: modsData } = useQuery({
+    queryKey: ["mods"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("mods").select("*").eq("active", true).order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const mods = modsData || [];
+  const filtered = filter === "TODOS" ? mods
+    : filter === "OBLIGATORIO" ? mods.filter(m => m.required)
+    : mods.filter(m => m.category === filter);
 
   return (
     <section id="mods" className="relative py-24 md:py-32 bg-card/30" ref={ref}>
@@ -55,7 +56,7 @@ const ModsSection = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {filtered.map((mod, i) => (
             <div
-              key={mod.name}
+              key={mod.id}
               className={`group bg-card border border-border rounded-xl p-5 card-hover transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
@@ -70,10 +71,16 @@ const ModsSection = () => {
                   <span className="px-2 py-0.5 text-[7px] font-heading tracking-widest bg-primary/20 text-primary rounded-full">REQ</span>
                 )}
               </div>
-              <p className="text-[11px] text-muted-foreground mb-3 font-body">{mod.desc}</p>
+              <p className="text-[11px] text-muted-foreground mb-3 font-body">{mod.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-[8px] font-heading tracking-[0.15em] text-muted-foreground">{mod.category}</span>
-                <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                {mod.workshop_url ? (
+                  <a href={mod.workshop_url} target="_blank" rel="noopener noreferrer">
+                    <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </a>
+                ) : (
+                  <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                )}
               </div>
             </div>
           ))}

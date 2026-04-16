@@ -74,12 +74,6 @@ const ServerPanel = ({ name, online, players, maxPlayers, map, version, mods, up
         <div className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full transition-all duration-1000" style={{ width: `${(players / maxPlayers) * 100}%` }} />
       </div>
     </div>
-
-    {/* HUD corners */}
-    <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-    <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-    <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
-    <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary/20 group-hover:border-primary/50 transition-colors" />
   </div>
 );
 
