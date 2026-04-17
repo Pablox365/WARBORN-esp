@@ -39,23 +39,26 @@ export function useAdmin() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error };
-  };
-
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
-  const setupAdmin = async (email: string, password: string, masterPassword: string) => {
+  // One-step login: only requires the master password "WARBORN"
+  const loginWithMaster = async (masterPassword: string) => {
     const { data, error } = await supabase.functions.invoke("admin-setup", {
-      body: { email, password, master_password: masterPassword },
+      body: { master_password: masterPassword },
     });
     if (error) return { error };
     if (data?.error) return { error: { message: data.error } };
+    if (data?.session) {
+      const { error: setErr } = await supabase.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      });
+      if (setErr) return { error: setErr };
+    }
     return { data };
   };
 
-  return { session, isAdmin, loading, signIn, signOut, setupAdmin };
+  return { session, isAdmin, loading, signOut, loginWithMaster };
 }
