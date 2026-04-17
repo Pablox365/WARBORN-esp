@@ -8,6 +8,8 @@ const SERVERS = {
   hardcore: "38672956",
 };
 
+type Mod = { modId: string; name: string; version: string };
+
 async function fetchServer(id: string) {
   const res = await fetch(`https://api.battlemetrics.com/servers/${id}`, {
     headers: { Accept: "application/json" },
@@ -16,6 +18,8 @@ async function fetchServer(id: string) {
   const json = await res.json();
   const a = json?.data?.attributes ?? {};
   const det = a.details ?? {};
+  const reforger = det.reforger ?? {};
+  const mods: Mod[] = Array.isArray(reforger.mods) ? reforger.mods : [];
   return {
     id,
     name: a.name ?? "",
@@ -26,11 +30,16 @@ async function fetchServer(id: string) {
     ip: a.ip ?? "",
     port: a.port ?? null,
     address: a.ip && a.port ? `${a.ip}:${a.port}` : "",
-    map: det.map ?? det.serverSteamId ?? "—",
-    version: det.version ?? det.reforger_version ?? "—",
-    modded: det.modded ?? false,
+    map: reforger.scenarioName ?? det.map ?? "—",
+    version: det.version ?? "—",
+    modded: mods.length > 0,
     rank: a.rank ?? null,
-    country: a.country ?? null,
+    country: det.country ?? a.country ?? null,
+    battleEye: !!reforger.battlEye,
+    password: !!det.password,
+    platforms: reforger.supportedGameClientTypes ?? [],
+    mods,
+    modCount: mods.length,
     updatedAt: a.updatedAt ?? null,
   };
 }
@@ -42,7 +51,7 @@ Deno.serve(async (req) => {
       fetchServer(SERVERS.normal),
       fetchServer(SERVERS.hardcore),
     ]);
-    return new Response(JSON.stringify({ normal, hardcore }), {
+    return new Response(JSON.stringify({ normal, hardcore, fetchedAt: new Date().toISOString() }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "public, max-age=30" },
     });

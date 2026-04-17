@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+export type LiveMod = { modId: string; name: string; version: string };
+
 export type LiveServer = {
   id: string;
   name: string;
@@ -16,10 +18,17 @@ export type LiveServer = {
   modded: boolean;
   rank: number | null;
   country: string | null;
+  battleEye: boolean;
+  password: boolean;
+  platforms: string[];
+  mods: LiveMod[];
+  modCount: number;
   updatedAt: string | null;
 };
 
-export type LiveServers = { normal: LiveServer; hardcore: LiveServer };
+export type LiveServers = { normal: LiveServer; hardcore: LiveServer; fetchedAt: string };
+
+export const REFETCH_MS = 60_000;
 
 export const useLiveServers = () =>
   useQuery({
@@ -29,6 +38,7 @@ export const useLiveServers = () =>
       if (error) throw error;
       return data as LiveServers;
     },
-    refetchInterval: 30000,
-    staleTime: 20000,
+    refetchInterval: REFETCH_MS,
+    refetchIntervalInBackground: true,
+    staleTime: 45_000,
   });
