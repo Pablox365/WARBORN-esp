@@ -6,7 +6,6 @@ const navLinks = [
   { label: "SERVIDORES", href: "#servers" },
   { label: "MODS", href: "#mods" },
   { label: "ESTADO", href: "#status" },
-  { label: "ROADMAP", href: "#roadmap" },
   { label: "MERCH", href: "#merch" },
   { label: "PARTNERS", href: "#partners" },
 ];
