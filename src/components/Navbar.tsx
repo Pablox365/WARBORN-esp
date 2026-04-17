@@ -77,6 +77,13 @@ const Navbar = () => {
 
         {/* Desktop actions */}
         <div className="hidden lg:flex items-center gap-2">
+          <Link
+            to="/admin"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-heading tracking-[0.15em] text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
+          >
+            <Shield className="w-3.5 h-3.5" />
+            ADMIN
+          </Link>
           <a
             href="https://discord.gg/"
             target="_blank"
@@ -121,6 +128,13 @@ const Navbar = () => {
               {l.label}
             </button>
           ))}
+          <Link
+            to="/admin"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-2 px-4 py-2.5 font-heading tracking-[0.15em] text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+          >
+            <Shield className="w-3.5 h-3.5" /> ADMIN
+          </Link>
           <div className="flex gap-2 mt-3 px-2">
             <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 border border-border rounded-lg font-heading tracking-[0.15em] text-[10px] hover:border-[#5865F2] hover:text-[#5865F2] transition-all">DISCORD</a>
             <button onClick={() => handleClick("#servers")} className="flex-1 text-center px-4 py-2.5 bg-primary text-primary-foreground rounded-lg font-heading tracking-[0.15em] text-[10px] font-bold">JUGAR</button>
