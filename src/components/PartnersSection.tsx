@@ -75,6 +75,7 @@ const PartnersSection = () => {
                 VISITAR WEB
                 <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </a>
+              <p className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground mt-3">CLICK PARA VISITAR WEB</p>
             </div>
           </div>
         </div>
