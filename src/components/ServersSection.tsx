@@ -112,7 +112,7 @@ const ServersSection = () => {
                       className="px-3 py-3 sm:px-4 rounded-lg border border-border hover:border-primary/50 text-muted-foreground hover:text-primary transition-all flex items-center justify-center gap-2 text-[10px] font-heading tracking-[0.15em]"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span className="sm:hidden">BATTLEMETRICS</span>
+                      <span>BATTLEMETRICS</span>
                     </a>
                   </div>
                 </div>

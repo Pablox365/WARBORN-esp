@@ -65,7 +65,7 @@ const HeroSection = () => {
 
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 
-      <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
+      <div className="container mx-auto px-4 relative z-10 pt-24 sm:pt-28 pb-16">
         <div className="max-w-4xl">
           {/* Wordmark Warborn — protagonista */}
           <div
@@ -80,7 +80,7 @@ const HeroSection = () => {
                 className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-gradient-to-r from-primary/40 via-primary/10 to-primary/40 animate-glow-pulse"
               />
               <h2
-                className="warborn-wordmark font-heading font-black tracking-[0.18em] leading-none uppercase text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[10.5rem] select-none"
+                className="warborn-wordmark font-heading font-black tracking-[0.12em] sm:tracking-[0.18em] leading-none uppercase text-[2.75rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[10.5rem] select-none"
                 data-text="WARBORN"
               >
                 WARBORN
@@ -92,7 +92,7 @@ const HeroSection = () => {
 
           {/* Title */}
           <div className={`mb-4 transition-all duration-700 delay-200 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
               <span className="block text-foreground">TU COMUNIDAD DE</span>
               <span className="text-shimmer text-glow-green">{typedText}</span>
               <span className="inline-block w-0.5 h-[0.8em] bg-primary ml-1 animate-glow-pulse" />

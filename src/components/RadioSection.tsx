@@ -6,7 +6,7 @@ const RadioSection = () => {
   const { tracks, currentTrack, isPlaying, isUserControlled, playTrack, togglePlayPause, nextTrack, releaseToBackground } = useRadio();
 
   return (
-    <section id="radio" className="relative py-20 md:py-28 px-4 overflow-hidden">
+    <section id="radio" className="relative py-16 md:py-28 px-4 overflow-hidden">
       {/* Fondo decorativo */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20 pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
@@ -20,7 +20,7 @@ const RadioSection = () => {
             <Radio className="w-3.5 h-3.5 text-primary animate-pulse" />
             <span className="text-[10px] font-heading tracking-[0.25em] text-primary">EN DIRECTO 24/7</span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-3">
             WARBORN <span className="text-primary">RADIO</span>
           </h2>
           <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
@@ -29,8 +29,8 @@ const RadioSection = () => {
         </div>
 
         {/* Player principal */}
-        <div className="glass rounded-2xl border border-border/50 p-6 md:p-8 mb-8 shadow-2xl shadow-primary/5">
-          <div className="flex flex-col md:flex-row items-center gap-6">
+        <div className="glass rounded-2xl border border-border/50 p-4 sm:p-6 md:p-8 mb-8 shadow-2xl shadow-primary/5">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
             {/* Visualizador / Icono */}
             <div className="relative shrink-0">
               <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center ${isPlaying ? "animate-pulse" : ""}`}>
@@ -51,7 +51,7 @@ const RadioSection = () => {
               <div className="text-[10px] font-heading tracking-[0.25em] text-primary mb-1">
                 {isUserControlled ? "REPRODUCIENDO" : "SONANDO DE FONDO"}
               </div>
-              <h3 className="text-xl md:text-2xl font-heading font-bold truncate">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-heading font-bold truncate">
                 {currentTrack?.title ?? "Cargando..."}
               </h3>
               <p className="text-xs text-muted-foreground mt-1 flex items-center justify-center md:justify-start gap-1.5">

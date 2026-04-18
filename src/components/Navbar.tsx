@@ -63,10 +63,10 @@ const Navbar = () => {
           : "bg-background/30 backdrop-blur-sm rounded-2xl border border-border/30"
       }`}
     >
-      <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
+      <div className="flex items-center justify-between h-12 md:h-16 px-3 md:px-6">
         {/* Logo as button (triple-click opens admin) */}
         <button onClick={handleLogoClick} className="flex items-center group" aria-label="Inicio Warborn">
-          <img src={warbornNormal} alt="Warborn" className="h-8 md:h-10 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_hsl(142_70%_45%/0.4)]" />
+          <img src={warbornNormal} alt="Warborn" className="h-7 md:h-10 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_hsl(142_70%_45%/0.4)]" />
         </button>
 
         {/* Desktop nav */}

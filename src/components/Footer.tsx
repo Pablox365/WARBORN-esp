@@ -47,16 +47,16 @@ const socials = [
 const Footer = () => (
   <footer className="relative border-t border-border bg-background">
     <div className="container mx-auto px-4 py-12 md:py-16">
-      <div className="grid md:grid-cols-4 gap-8">
+      <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
         {/* Brand */}
         <div className="md:col-span-2">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
             <img src={warbornNormal} alt="Warborn" className="h-10" />
           </div>
-          <p className="text-sm text-muted-foreground max-w-md mb-6 font-body">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto md:mx-0 mb-6 font-body">
             Comunidad hispanohablante de Arma Reforger. Simulación táctica al más alto nivel.
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center md:justify-start gap-3">
             <img src={warbornNormal} alt="Normal" className="h-6 opacity-60 hover:opacity-100 transition-opacity" />
             <img src={warbornHardcore} alt="Hardcore" className="h-6 opacity-60 hover:opacity-100 transition-opacity" />
           </div>
@@ -65,12 +65,12 @@ const Footer = () => (
         {/* Links */}
         <div>
           <h4 className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground mb-4">NAVEGACIÓN</h4>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 items-center md:items-start">
             {["Inicio", "Servidores", "Mods", "Estado", "Merch", "Partners"].map(l => (
               <button
                 key={l}
                 onClick={() => document.querySelector(`#${l.toLowerCase() === "inicio" ? "hero" : l.toLowerCase()}`)?.scrollIntoView({ behavior: "smooth" })}
-                className="text-sm text-muted-foreground hover:text-primary hover:translate-x-1 transition-all text-left font-body"
+                className="text-sm text-muted-foreground hover:text-primary md:hover:translate-x-1 transition-all text-center md:text-left font-body"
               >
                 {l}
               </button>
@@ -81,14 +81,14 @@ const Footer = () => (
         {/* Social */}
         <div>
           <h4 className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground mb-4">REDES SOCIALES</h4>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center md:items-start">
             {socials.map(s => (
               <a
                 key={s.name}
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center gap-3 text-sm text-muted-foreground ${s.color} transition-all hover:translate-x-1 font-body`}
+                className={`flex items-center gap-3 text-sm text-muted-foreground ${s.color} transition-all md:hover:translate-x-1 font-body`}
               >
                 {s.icon}
                 {s.name}
@@ -99,7 +99,7 @@ const Footer = () => (
       </div>
 
       {/* Bottom */}
-      <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-center">
         <p className="text-[10px] font-heading tracking-[0.15em] text-muted-foreground">© 2026 WARBORN. TODOS LOS DERECHOS RESERVADOS.</p>
         <div className="flex items-center gap-4">
           {socials.map(s => (
