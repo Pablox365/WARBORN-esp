@@ -8,6 +8,7 @@ import DonationsSection from "@/components/DonationsSection";
 import PartnersSection from "@/components/PartnersSection";
 import FeedbackSection from "@/components/FeedbackSection";
 import Footer from "@/components/Footer";
+import HiddenAdminTrigger from "@/components/HiddenAdminTrigger";
 
 const Index = () => (
   <div className="min-h-screen bg-background">
@@ -21,6 +22,7 @@ const Index = () => (
     <PartnersSection />
     <FeedbackSection />
     <Footer />
+    <HiddenAdminTrigger />
   </div>
 );
 
