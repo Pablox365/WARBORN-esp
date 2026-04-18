@@ -276,23 +276,7 @@
 }
 .warborn-wordmark::before,
 .warborn-wordmark::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  -webkit-text-fill-color: initial;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0;
-}
-.warborn-wordmark::before {
-  color: hsl(142 80% 55%);
-  animation: warborn-glitch-a 5s infinite steps(1);
-  clip-path: polygon(0 0, 100% 0, 100% 42%, 0 42%);
-}
-.warborn-wordmark::after {
-  color: hsl(180 80% 60%);
-  animation: warborn-glitch-b 6.5s infinite steps(1);
-  clip-path: polygon(0 58%, 100% 58%, 100% 100%, 0 100%);
+  display: none;
 }
 @keyframes warborn-shine {
   0% { background-position: 0% 50%; }
