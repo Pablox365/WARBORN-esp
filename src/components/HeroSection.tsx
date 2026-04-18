@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Particles from "./Particles";
+
 import bgAds from "@/assets/bg-ads.jpg";
 import bgFlag from "@/assets/bg-flag.jpg";
 import bgTank from "@/assets/bg-tank.jpg";
