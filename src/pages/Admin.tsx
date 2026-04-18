@@ -269,57 +269,6 @@ const ModsAdmin = () => {
 };
 
 // (Roadmap admin removed)
-  const { data: items, isLoading, upsert, remove } = useCrud("roadmap_items");
-  const [editing, setEditing] = useState<any>(null);
-
-  if (isLoading) return <Loading />;
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-heading text-lg tracking-wider">ROADMAP</h2>
-        <button onClick={() => setEditing({ title: "", description: "", status: "dev", sort_order: 0 })} className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-xs font-heading tracking-wider">
-          <Plus className="w-4 h-4" /> NUEVO
-        </button>
-      </div>
-
-      {editing && (
-        <EditForm
-          item={editing}
-          fields={[
-            { key: "title", label: "Título", type: "text" },
-            { key: "description", label: "Descripción", type: "textarea" },
-            { key: "status", label: "Estado", type: "select", options: ["done", "testing", "dev"] },
-            { key: "sort_order", label: "Orden", type: "number" },
-          ]}
-          onSave={(item) => { upsert.mutate(item); setEditing(null); }}
-          onCancel={() => setEditing(null)}
-          saving={upsert.isPending}
-        />
-      )}
-
-      <div className="grid gap-3">
-        {items?.map((item: any) => (
-          <div key={item.id} className="flex items-center gap-4 bg-card border border-border rounded-lg p-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <span className="font-heading text-sm tracking-wider">{item.title}</span>
-                <span className={`text-[8px] px-2 py-0.5 rounded-full font-heading tracking-wider ${
-                  item.status === "done" ? "bg-primary/20 text-primary" : item.status === "testing" ? "bg-yellow-400/20 text-yellow-400" : "bg-blue-400/20 text-blue-400"
-                }`}>{item.status === "done" ? "COMPLETADO" : item.status === "testing" ? "EN PRUEBAS" : "EN DESARROLLO"}</span>
-              </div>
-              <span className="text-xs text-muted-foreground">{item.description}</span>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => setEditing(item)} className="p-2 hover:bg-secondary rounded-lg transition-colors"><Pencil className="w-4 h-4 text-muted-foreground" /></button>
-              <button onClick={() => { if (confirm("¿Eliminar?")) remove.mutate(item.id); }} className="p-2 hover:bg-destructive/10 rounded-lg transition-colors"><Trash2 className="w-4 h-4 text-destructive" /></button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 // === Orders Admin ===
 const OrdersAdmin = () => {
