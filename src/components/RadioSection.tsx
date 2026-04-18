@@ -1,6 +1,6 @@
 import { Radio, Play, Pause, SkipForward, Volume2 } from "lucide-react";
 import { useRadio } from "@/contexts/RadioContext";
-import warbornLogo from "@/assets/warborn-normal.png";
+import warbornLogo from "@/assets/radio-cover.avif";
 
 const RadioSection = () => {
   const { tracks, currentTrack, isPlaying, isUserControlled, playTrack, togglePlayPause, nextTrack, releaseToBackground } = useRadio();
