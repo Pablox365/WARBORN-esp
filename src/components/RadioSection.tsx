@@ -108,7 +108,7 @@ const RadioSection = () => {
                   <img
                     src={warbornLogo}
                     alt="Warborn"
-                    className={`w-7 h-7 object-contain transition-opacity ${active ? "opacity-30" : "opacity-80 group-hover:opacity-100"}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity ${active ? "opacity-50" : "opacity-90 group-hover:opacity-100"}`}
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     {active && isPlaying ? (
