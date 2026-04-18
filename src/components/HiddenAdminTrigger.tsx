@@ -1,30 +1,14 @@
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X, Shield } from "lucide-react";
 import Admin from "@/pages/Admin";
 
 const HiddenAdminTrigger = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const keyHandler = (e: KeyboardEvent) => {
-      // Ctrl+Shift+A (or Cmd+Shift+A on macOS)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a" || e.code === "KeyA")) {
-        e.preventDefault();
-        e.stopPropagation();
-        setOpen((v) => !v);
-      }
-    };
     const customHandler = () => setOpen(true);
-
-    window.addEventListener("keydown", keyHandler, true); // capture phase
-    document.addEventListener("keydown", keyHandler, true);
     window.addEventListener("warborn:open-admin", customHandler);
-
-    return () => {
-      window.removeEventListener("keydown", keyHandler, true);
-      document.removeEventListener("keydown", keyHandler, true);
-      window.removeEventListener("warborn:open-admin", customHandler);
-    };
+    return () => window.removeEventListener("warborn:open-admin", customHandler);
   }, []);
 
   // Lock body scroll when open
@@ -36,24 +20,36 @@ const HiddenAdminTrigger = () => {
     }
   }, [open]);
 
-  if (!open) return null;
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Panel de administración"
-      className="fixed inset-0 z-[200] bg-background overflow-y-auto"
-    >
+    <>
+      {/* Discrete physical admin button (bottom-right) */}
       <button
-        onClick={() => setOpen(false)}
-        aria-label="Cerrar panel admin"
-        className="fixed top-3 right-3 z-[210] w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border hover:bg-destructive/10 hover:border-destructive transition-colors"
+        onClick={() => setOpen(true)}
+        aria-label="Abrir panel admin"
+        title="Admin"
+        className="fixed bottom-3 right-3 z-[150] w-9 h-9 flex items-center justify-center rounded-full bg-card/60 backdrop-blur border border-border/50 text-muted-foreground/60 hover:text-primary hover:border-primary/60 hover:bg-card transition-all"
       >
-        <X className="w-5 h-5" />
+        <Shield className="w-4 h-4" />
       </button>
-      <Admin />
-    </div>
+
+      {open && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Panel de administración"
+          className="fixed inset-0 z-[200] bg-background overflow-y-auto"
+        >
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Cerrar panel admin"
+            className="fixed top-3 right-3 z-[210] w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border hover:bg-destructive/10 hover:border-destructive transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <Admin />
+        </div>
+      )}
+    </>
   );
 };
 

@@ -4,16 +4,24 @@ import { SectionHeader } from "./ServersSection";
 import { ExternalLink, Loader2, RefreshCw, Package, Search } from "lucide-react";
 import { useLiveServers, type LiveMod } from "@/hooks/useLiveServers";
 
+type ServerFilter = "normal" | "hardcore";
+
 const ModsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [search, setSearch] = useState("");
+  const [serverFilter, setServerFilter] = useState<ServerFilter>("normal");
   const { data, isLoading, isFetching, dataUpdatedAt } = useLiveServers();
 
-  const mods: LiveMod[] = data?.normal?.mods ?? [];
+  const mods: LiveMod[] = data?.[serverFilter]?.mods ?? [];
   const filtered = search
     ? mods.filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
     : mods;
   const lastUpdate = dataUpdatedAt ? new Date(dataUpdatedAt) : null;
+
+  const filters: { key: ServerFilter; label: string }[] = [
+    { key: "normal", label: "NORMAL" },
+    { key: "hardcore", label: "HARDCORE" },
+  ];
 
   return (
     <section id="mods" className="relative py-20 md:py-32 bg-card/30" ref={ref}>
@@ -22,7 +30,7 @@ const ModsSection = () => {
           visible={isVisible}
           label="WORKSHOP · LIVE"
           title="MODS ACTIVOS"
-          subtitle="Sincronizado en tiempo real desde el servidor Normal de BattleMetrics."
+          subtitle="Sincronizado en tiempo real desde BattleMetrics. Filtra por servidor."
         />
 
         <div className={`flex items-center justify-center gap-3 mt-6 transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
@@ -39,7 +47,26 @@ const ModsSection = () => {
           )}
         </div>
 
-        <div className={`max-w-md mx-auto mt-6 mb-8 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+        <div className={`flex flex-wrap items-center justify-center gap-2 mt-6 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          {filters.map((f) => {
+            const active = serverFilter === f.key;
+            return (
+              <button
+                key={f.key}
+                onClick={() => setServerFilter(f.key)}
+                className={`px-4 py-2 rounded-lg text-[10px] font-heading tracking-[0.25em] border transition-all ${
+                  active
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={`max-w-md mx-auto mt-4 mb-8 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input

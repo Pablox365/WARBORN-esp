@@ -111,9 +111,14 @@ const Footer = () => (
       </div>
 
       <div className="mt-6 text-center">
-        <p className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground">
-          MADE BY <span className="text-primary">PABLO</span>
-        </p>
+        <a
+          href="https://alineaspain.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-[10px] font-heading tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors"
+        >
+          POWERED BY <span className="text-primary">ALINEA</span>
+        </a>
       </div>
     </div>
   </footer>
