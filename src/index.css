@@ -254,3 +254,43 @@
   0%, 100% { transform: scaleY(0.4); }
   50% { transform: scaleY(1); }
 }
+
+/* Warborn wordmark — shimmer + glow + glitch sutil */
+.warborn-wordmark {
+  position: relative;
+  background: linear-gradient(
+    100deg,
+    hsl(0 0% 95%) 0%,
+    hsl(142 70% 55%) 35%,
+    hsl(142 80% 75%) 50%,
+    hsl(142 70% 55%) 65%,
+    hsl(0 0% 95%) 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: warborn-shine 6s linear infinite;
+  filter: drop-shadow(0 0 18px hsl(142 70% 45% / 0.45));
+}
+.warborn-wordmark::before,
+.warborn-wordmark::after {
+  display: none;
+}
+@keyframes warborn-shine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}
+@keyframes warborn-glitch-a {
+  0%, 92%, 100% { transform: translate(0, 0); opacity: 0; }
+  93% { transform: translate(-3px, -1px); opacity: 0.6; }
+  95% { transform: translate(2px, 1px); opacity: 0.5; }
+  97% { transform: translate(-1px, 0); opacity: 0.7; }
+}
+@keyframes warborn-glitch-b {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  89% { transform: translate(3px, 1px); opacity: 0.55; }
+  92% { transform: translate(-2px, -1px); opacity: 0.6; }
+  94% { transform: translate(1px, 0); opacity: 0.5; }
+}
