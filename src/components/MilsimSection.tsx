@@ -6,12 +6,54 @@ const MilsimSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="milsim" className="relative py-20 md:py-28 overflow-hidden" ref={ref}>
-      {/* Orange gradient background matching the logo */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(20,85%,55%)] via-[hsl(15,75%,50%)] to-[hsl(8,65%,42%)]" />
-      <div className="absolute inset-0 grid-overlay opacity-20 pointer-events-none" />
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[hsl(30,90%,60%)]/30 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[hsl(0,70%,40%)]/30 rounded-full blur-[120px] pointer-events-none" />
+    <section id="milsim" className="relative py-24 md:py-32 overflow-hidden isolate" ref={ref}>
+      {/* Layer 1: Deep base color */}
+      <div className="absolute inset-0 bg-[hsl(12,55%,18%)]" />
+
+      {/* Layer 2: Radial sunset gradient (matches logo) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 70% at 50% 35%, hsl(28, 90%, 60%) 0%, hsl(18, 80%, 50%) 30%, hsl(10, 70%, 38%) 60%, hsl(8, 60%, 22%) 100%)",
+        }}
+      />
+
+      {/* Layer 3: Subtle noise/grain texture */}
+      <div
+        className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
+      {/* Layer 4: Diagonal military stripes */}
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(45deg, transparent 0 22px, #000 22px 24px)",
+        }}
+      />
+
+      {/* Layer 5: Grid overlay */}
+      <div className="absolute inset-0 grid-overlay opacity-[0.12] pointer-events-none" />
+
+      {/* Layer 6: Glow accents */}
+      <div className="absolute -top-40 left-1/3 w-[600px] h-[600px] bg-[hsl(35,95%,65%)]/25 rounded-full blur-[160px] pointer-events-none animate-glow-pulse" />
+      <div className="absolute -bottom-40 right-1/4 w-[500px] h-[500px] bg-[hsl(0,75%,35%)]/35 rounded-full blur-[140px] pointer-events-none" />
+
+      {/* Layer 7: Vignette for depth */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_rgba(0,0,0,0.55)_100%)] pointer-events-none" />
+
+      {/* Layer 8: Top & bottom fade into surrounding sections */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+
+      {/* Layer 9: Scanline (subtle HUD effect) */}
+      <div className="absolute inset-0 scanline opacity-30 pointer-events-none" />
+
 
       <div className="container mx-auto px-4 relative z-10">
         <div
