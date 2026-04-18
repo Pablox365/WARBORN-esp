@@ -52,50 +52,39 @@ const HeroSection = () => {
             style={{ transitionProperty: "opacity, transform", transitionDuration: "2000ms, 25000ms" }}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/80" />
       </div>
 
-      <div className="absolute inset-0 grid-overlay pointer-events-none opacity-40" />
-      <Particles />
-      <div className="absolute inset-0 scanline pointer-events-none" />
-
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-[120px] animate-glow-pulse pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-[120px] animate-glow-pulse pointer-events-none" style={{ animationDelay: "1s" }} />
+      <div className="absolute inset-0 grid-overlay pointer-events-none opacity-15" />
 
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
-        <div className="max-w-4xl">
-          {/* Wordmark Warborn — protagonista */}
+        <div className="max-w-3xl">
+          {/* Wordmark Warborn — más contenido */}
           <div
-            className={`mb-6 md:mb-8 transition-all duration-700 delay-100 ${
+            className={`mb-5 transition-all duration-700 delay-100 ${
               loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="relative inline-block group">
-              {/* Glow detrás */}
-              <div
-                aria-hidden
-                className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-gradient-to-r from-primary/40 via-primary/10 to-primary/40 animate-glow-pulse"
-              />
+            <div className="relative inline-block">
               <h2
-                className="warborn-wordmark font-heading font-black tracking-[0.18em] leading-none uppercase text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[10.5rem] select-none"
+                className="warborn-wordmark font-heading font-black tracking-[0.2em] leading-none uppercase text-4xl sm:text-5xl md:text-6xl lg:text-7xl select-none"
                 data-text="WARBORN"
               >
                 WARBORN
               </h2>
-              {/* Línea inferior animada */}
-              <div className="mt-2 h-[3px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80 animate-glow-pulse" />
+              <div className="mt-2 h-px w-2/3 bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
             </div>
           </div>
 
           {/* Title */}
           <div className={`mb-4 transition-all duration-700 delay-200 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
-              <span className="block text-foreground">TU COMUNIDAD DE</span>
-              <span className="text-shimmer text-glow-green">{typedText}</span>
-              <span className="inline-block w-0.5 h-[0.8em] bg-primary ml-1 animate-glow-pulse" />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold leading-tight">
+              <span className="block text-foreground">Tu comunidad de</span>
+              <span className="text-primary">{typedText}</span>
+              <span className="inline-block w-0.5 h-[0.8em] bg-primary ml-1 align-middle animate-glow-pulse" />
             </h1>
           </div>
 
