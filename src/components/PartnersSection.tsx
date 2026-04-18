@@ -60,7 +60,7 @@ const PartnersSection = () => {
               <span className="text-[10px] font-heading tracking-[0.4em] text-primary">DESARROLLO WEB</span>
             </div>
             <div className="h-16 md:h-20 flex items-center justify-center mb-6 overflow-hidden">
-              <img src={alineaLogo} alt="Alinea" className="h-40 md:h-52 w-auto object-contain" />
+              <img src={alineaLogo} alt="Alinea" className="h-56 md:h-72 w-auto object-contain" />
             </div>
             <p className="text-sm text-muted-foreground mb-6 font-body">
               Empresa creadora de esta web. Desarrollo de páginas modernas, rápidas y a medida para tu proyecto.
