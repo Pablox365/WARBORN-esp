@@ -6,7 +6,6 @@ import bgTank from "@/assets/bg-tank.jpg";
 import bgHeli from "@/assets/bg-heli.jpg";
 import bgSpain from "@/assets/bg-spain.jpg";
 import warbornNormal from "@/assets/warborn-normal.png";
-import spainFlag from "@/assets/spain-flag-brush.avif";
 import { Crosshair, Shield, Radio, ChevronDown, Loader2 } from "lucide-react";
 import { useLiveServers } from "@/hooks/useLiveServers";
 
@@ -74,7 +73,7 @@ const HeroSection = () => {
               loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="relative inline-flex items-center gap-2 sm:gap-4 md:gap-6 group">
+            <div className="relative inline-block group">
               {/* Glow detrás */}
               <div
                 aria-hidden
@@ -86,22 +85,9 @@ const HeroSection = () => {
               >
                 WARBORN
               </h2>
-              {/* Bandera España difuminada al final */}
-              <img
-                src={spainFlag}
-                alt="Bandera de España"
-                aria-hidden="true"
-                className="pointer-events-none select-none h-[3.5rem] sm:h-[5rem] md:h-[7rem] lg:h-[9rem] xl:h-[10.5rem] w-auto object-contain opacity-80 mix-blend-screen"
-                style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to right, transparent 0%, black 35%, black 70%, transparent 100%)",
-                  maskImage:
-                    "linear-gradient(to right, transparent 0%, black 35%, black 70%, transparent 100%)",
-                }}
-              />
+              {/* Línea inferior animada */}
+              <div className="mt-2 h-[3px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80 animate-glow-pulse" />
             </div>
-            {/* Línea inferior animada */}
-            <div className="mt-2 h-[3px] w-full max-w-[60%] bg-gradient-to-r from-transparent via-primary to-transparent opacity-80 animate-glow-pulse" />
           </div>
 
           {/* Title */}
