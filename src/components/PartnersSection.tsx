@@ -55,7 +55,7 @@ const PartnersSection = () => {
               <Code2 className="w-3 h-3 text-primary" />
               <span className="text-[10px] font-heading tracking-[0.4em] text-primary">DESARROLLO WEB</span>
             </div>
-            <img src={alineaLogo} alt="Alinea" className="h-12 md:h-16 mx-auto mb-6 object-contain" />
+            <img src={alineaLogo} alt="Alinea" className="h-32 md:h-40 mx-auto mb-6 object-contain" />
             <p className="text-sm text-muted-foreground mb-6 font-body">
               Empresa creadora de esta web. Desarrollo de páginas modernas, rápidas y a medida para tu proyecto.
             </p>
