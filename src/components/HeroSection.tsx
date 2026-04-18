@@ -5,8 +5,8 @@ import bgFlag from "@/assets/bg-flag.jpg";
 import bgTank from "@/assets/bg-tank.jpg";
 import bgHeli from "@/assets/bg-heli.jpg";
 import bgSpain from "@/assets/bg-spain.jpg";
-import warbornNormal from "@/assets/warborn-normal.png";
-import { Crosshair, Shield, Radio, ChevronDown, Loader2 } from "lucide-react";
+
+import { Crosshair, ChevronDown } from "lucide-react";
 import { useLiveServers } from "@/hooks/useLiveServers";
 
 const SLIDES = [bgAds, bgTank, bgHeli, bgSpain, bgFlag];
@@ -18,9 +18,6 @@ const HeroSection = () => {
   const fullText = "ARMA REFORGER";
   const { data, isLoading } = useLiveServers();
 
-  const totalPlayers = (data?.normal?.players ?? 0) + (data?.hardcore?.players ?? 0);
-  const totalMods = data?.normal?.modCount ?? 0;
-  const onlineCount = (data?.normal?.online ? 1 : 0) + (data?.hardcore?.online ? 1 : 0);
 
   useEffect(() => {
     setLoaded(true);
@@ -142,19 +139,8 @@ const HeroSection = () => {
             </a>
           </div>
 
-          {/* Live stats */}
-          <div
-            className={`flex flex-wrap gap-5 md:gap-10 transition-all duration-700 delay-600 ${
-              loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <LiveStat icon={<Crosshair className="w-4 h-4 text-primary" />} value={isLoading ? null : totalPlayers} label="JUGADORES EN VIVO" />
-            <LiveStat icon={<Shield className="w-4 h-4 text-primary" />} value={isLoading ? null : onlineCount} label="SERVIDORES ONLINE" total={2} />
-            <LiveStat icon={<Radio className="w-4 h-4 text-primary" />} value={isLoading ? null : totalMods} label="MODS ACTIVOS" />
-          </div>
-
           {/* HUD quick status */}
-          <div className={`flex flex-col sm:flex-row gap-3 mt-8 transition-all duration-700 delay-700 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`flex flex-col sm:flex-row gap-3 transition-all duration-700 delay-600 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <ServerQuickStatus name="NORMAL" players={data?.normal?.players ?? 0} maxPlayers={data?.normal?.maxPlayers ?? 0} online={!!data?.normal?.online} loading={isLoading} />
             <ServerQuickStatus name="HARDCORE" players={data?.hardcore?.players ?? 0} maxPlayers={data?.hardcore?.maxPlayers ?? 0} online={!!data?.hardcore?.online} loading={isLoading} />
           </div>
@@ -180,19 +166,6 @@ const HeroSection = () => {
     </section>
   );
 };
-
-const LiveStat = ({ icon, value, label, total }: { icon: React.ReactNode; value: number | null; label: string; total?: number }) => (
-  <div className="flex items-center gap-3">
-    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">{icon}</div>
-    <div>
-      <div className="text-lg md:text-xl font-heading font-bold text-foreground flex items-center gap-1">
-        {value === null ? <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" /> : <>{value}{total ? `/${total}` : ""}</>}
-      </div>
-      <div className="text-[8px] font-heading tracking-[0.2em] text-muted-foreground">{label}</div>
-    </div>
-  </div>
-);
-
 const ServerQuickStatus = ({ name, players, maxPlayers, online, loading }: { name: string; players: number; maxPlayers: number; online: boolean; loading: boolean }) => (
   <div className="flex items-center gap-3 px-4 py-3 glass rounded-xl animate-hud-flicker group hover:border-primary/30 transition-all duration-300">
     <div className="flex flex-col">
