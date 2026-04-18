@@ -47,7 +47,26 @@ const ModsSection = () => {
           )}
         </div>
 
-        <div className={`max-w-md mx-auto mt-6 mb-8 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+        <div className={`flex flex-wrap items-center justify-center gap-2 mt-6 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          {filters.map((f) => {
+            const active = serverFilter === f.key;
+            return (
+              <button
+                key={f.key}
+                onClick={() => setServerFilter(f.key)}
+                className={`px-4 py-2 rounded-lg text-[10px] font-heading tracking-[0.25em] border transition-all ${
+                  active
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={`max-w-md mx-auto mt-4 mb-8 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
