@@ -67,33 +67,23 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
         <div className="max-w-4xl">
-          {/* Live badge */}
+          {/* Logo Warborn — protagonista */}
           <div
-            className={`inline-flex items-center gap-2 px-4 py-1.5 border border-primary/30 rounded-full mb-6 md:mb-8 transition-all duration-700 ${
-              loaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-primary animate-status-pulse" />
-            <span className="text-[10px] font-heading tracking-[0.2em] text-primary">
-              {isLoading ? "CONECTANDO..." : `${onlineCount}/2 SERVIDORES ONLINE`}
-            </span>
-          </div>
-
-          {/* Logo Warborn */}
-          <div
-            className={`flex items-center gap-4 mb-6 md:mb-8 transition-all duration-700 delay-100 ${
+            className={`flex items-center mb-6 md:mb-8 transition-all duration-700 delay-100 ${
               loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <div className="relative group">
+              {/* Glow detrás del logo */}
+              <div className="absolute -inset-8 bg-primary/20 rounded-full blur-3xl opacity-60 group-hover:opacity-100 transition-opacity animate-glow-pulse" />
+              <div className="absolute -inset-4 bg-primary/10 rounded-full blur-2xl" />
               <img
                 src={warbornNormal}
                 alt="Warborn"
-                width={200}
-                height={80}
-                className="h-14 md:h-20 lg:h-24 animate-float transition-transform group-hover:scale-110"
+                width={520}
+                height={200}
+                className="relative h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 w-auto animate-float transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_0_30px_hsl(142_70%_45%/0.6)]"
               />
-              <div className="absolute -inset-2 bg-primary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
 
