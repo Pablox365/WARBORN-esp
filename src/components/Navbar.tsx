@@ -14,6 +14,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#hero");
+  const [logoClicks, setLogoClicks] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -31,9 +32,26 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Triple-click on logo opens admin (hidden fallback)
+  useEffect(() => {
+    if (logoClicks === 0) return;
+    if (logoClicks >= 3) {
+      window.dispatchEvent(new CustomEvent("warborn:open-admin"));
+      setLogoClicks(0);
+      return;
+    }
+    const t = setTimeout(() => setLogoClicks(0), 800);
+    return () => clearTimeout(t);
+  }, [logoClicks]);
+
   const handleClick = (href: string) => {
     setMobileOpen(false);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleLogoClick = () => {
+    setLogoClicks((c) => c + 1);
+    handleClick("#hero");
   };
 
   return (
@@ -45,8 +63,8 @@ const Navbar = () => {
       }`}
     >
       <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
-        {/* Logo as button */}
-        <button onClick={() => handleClick("#hero")} className="flex items-center group" aria-label="Inicio Warborn">
+        {/* Logo as button (triple-click opens admin) */}
+        <button onClick={handleLogoClick} className="flex items-center group" aria-label="Inicio Warborn">
           <img src={warbornNormal} alt="Warborn" className="h-8 md:h-10 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_hsl(142_70%_45%/0.4)]" />
         </button>
 
