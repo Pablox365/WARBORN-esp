@@ -90,11 +90,12 @@ async function fetchServer(id: string) {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
-    const [normal, hardcore] = await Promise.all([
+    const [normal, hardcore, milsim] = await Promise.all([
       fetchServer(SERVERS.normal),
       fetchServer(SERVERS.hardcore),
+      fetchServer(SERVERS.milsim),
     ]);
-    return new Response(JSON.stringify({ normal, hardcore, fetchedAt: new Date().toISOString() }), {
+    return new Response(JSON.stringify({ normal, hardcore, milsim, fetchedAt: new Date().toISOString() }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "public, max-age=30" },
     });
