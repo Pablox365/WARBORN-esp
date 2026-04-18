@@ -109,6 +109,12 @@ const Footer = () => (
           ))}
         </div>
       </div>
+
+      <div className="mt-6 text-center">
+        <p className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground">
+          MADE BY <span className="text-primary">PABLO</span>
+        </p>
+      </div>
     </div>
   </footer>
 );
