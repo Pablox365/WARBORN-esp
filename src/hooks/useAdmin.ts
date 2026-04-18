@@ -65,15 +65,25 @@ export function useAdmin() {
     const { data, error } = await supabase.functions.invoke("admin-setup", {
       body: { master_password: masterPassword },
     });
+
     if (error) return { error };
     if (data?.error) return { error: { message: data.error } };
+
     if (data?.session) {
-      const { error: setErr } = await supabase.auth.setSession({
+      setLoading(true);
+      setSession(data.session);
+      setIsAdmin(true);
+
+      supabase.auth.setSession({
         access_token: data.session.access_token,
         refresh_token: data.session.refresh_token,
+      }).catch(() => {
+        // Keep optimistic admin access; auth listener/getSession will reconcile.
+      }).finally(() => {
+        setLoading(false);
       });
-      if (setErr) return { error: setErr };
     }
+
     return { data };
   };
 
