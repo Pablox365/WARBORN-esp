@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { LogOut, Package, Box, Map, ShoppingCart, Megaphone, Plus, Pencil, Trash2, Save, X, Shield } from "lucide-react";
+import { LogOut, Package, Box, ShoppingCart, Megaphone, Plus, Pencil, Trash2, Save, X, Shield, Star, MessageSquare } from "lucide-react";
 
 const Admin = () => {
   const { session, isAdmin, loading, signOut, loginWithMaster } = useAdmin();
@@ -34,8 +34,8 @@ const Admin = () => {
           {[
             { id: "products", label: "Productos", icon: <Package className="w-4 h-4" /> },
             { id: "mods", label: "Mods", icon: <Box className="w-4 h-4" /> },
-            { id: "roadmap", label: "Roadmap", icon: <Map className="w-4 h-4" /> },
             { id: "orders", label: "Pedidos", icon: <ShoppingCart className="w-4 h-4" /> },
+            { id: "feedback", label: "Reseñas", icon: <Star className="w-4 h-4" /> },
             { id: "announcements", label: "Anuncios", icon: <Megaphone className="w-4 h-4" /> },
           ].map((t) => (
             <button
@@ -52,8 +52,8 @@ const Admin = () => {
 
         {tab === "products" && <ProductsAdmin />}
         {tab === "mods" && <ModsAdmin />}
-        {tab === "roadmap" && <RoadmapAdmin />}
         {tab === "orders" && <OrdersAdmin />}
+        {tab === "feedback" && <FeedbackAdmin />}
         {tab === "announcements" && <AnnouncementsAdmin />}
       </div>
     </div>
@@ -175,9 +175,10 @@ const ProductsAdmin = () => {
           fields={[
             { key: "name", label: "Nombre", type: "text" },
             { key: "description", label: "Descripción", type: "textarea" },
-            { key: "price", label: "Precio", type: "number" },
+            { key: "price", label: "Precio (€)", type: "number" },
             { key: "type", label: "Tipo", type: "select", options: ["Camiseta", "Sudadera", "Accesorio"] },
-            { key: "image_url", label: "URL Imagen", type: "text" },
+            { key: "image_url", label: "Imagen principal (URL)", type: "text" },
+            { key: "images", label: "Galería (URLs separadas por coma)", type: "csv" },
             { key: "sort_order", label: "Orden", type: "number" },
             { key: "active", label: "Activo", type: "boolean" },
           ]}
