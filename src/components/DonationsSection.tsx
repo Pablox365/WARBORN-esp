@@ -35,7 +35,7 @@ const DonationsSection = () => {
 
           <div className={`text-center transition-all duration-700 delay-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
             <a
-              href="https://ko-fi.com/"
+              href="https://ko-fi.com/warbornesp"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-4 bg-primary text-primary-foreground rounded-xl font-heading tracking-[0.15em] text-xs font-bold hover:brightness-110 hover:scale-[1.02] transition-all btn-military glow-green"
