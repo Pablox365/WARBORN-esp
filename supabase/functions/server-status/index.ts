@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
     ]);
     return new Response(JSON.stringify({ normal, hardcore, milsim, fetchedAt: new Date().toISOString() }), {
       status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "public, max-age=30" },
+      headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
