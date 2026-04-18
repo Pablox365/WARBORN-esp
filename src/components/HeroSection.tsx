@@ -66,7 +66,7 @@ const HeroSection = () => {
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl text-center mx-auto">
           {/* Wordmark Warborn — protagonista */}
           <div
             className={`mb-6 md:mb-8 transition-all duration-700 delay-100 ${
