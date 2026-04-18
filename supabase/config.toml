@@ -5,3 +5,7 @@ verify_jwt = false
 
 [functions.admin-setup]
 verify_jwt = false
+
+[functions.classify-mods]
+verify_jwt = false
+
