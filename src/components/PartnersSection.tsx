@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionHeader } from "./ServersSection";
 import hostingLogo from "@/assets/logowithtext.png";
-import { Copy, Check, Tag } from "lucide-react";
+import alineaLogo from "@/assets/alinea-logo.png";
+import { Copy, Check, Tag, ExternalLink, Code2 } from "lucide-react";
 import { toast } from "sonner";
 
 const PartnersSection = () => {
@@ -23,7 +24,8 @@ const PartnersSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeader visible={isVisible} label="COLABORADORES" title="PARTNERS" subtitle="Empresas que hacen posible esta comunidad." />
 
-        <div className="max-w-xl mx-auto mt-12">
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-12">
+          {/* Hosting partner */}
           <div
             className={`bg-card border border-border rounded-xl p-8 text-center card-hover animate-border-glow transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
@@ -44,6 +46,30 @@ const PartnersSection = () => {
             </button>
             <p className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground mt-3">CLICK PARA COPIAR</p>
           </div>
+
+          {/* Alinea - web agency */}
+          <div
+            className={`bg-card border border-border rounded-xl p-8 text-center card-hover animate-border-glow transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Code2 className="w-3 h-3 text-primary" />
+              <span className="text-[10px] font-heading tracking-[0.4em] text-primary">DESARROLLO WEB</span>
+            </div>
+            <img src={alineaLogo} alt="Alinea" className="h-16 md:h-20 mx-auto mb-6 object-contain" />
+            <p className="text-sm text-muted-foreground mb-6 font-body">
+              Empresa creadora de esta web. Desarrollo de páginas modernas, rápidas y a medida para tu proyecto.
+            </p>
+            <a
+              href="https://alineaspain.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-primary/40 hover:border-primary text-primary rounded-xl font-heading tracking-[0.4em] text-sm font-bold hover:bg-primary/10 transition-all duration-300 hover:scale-[1.02]"
+            >
+              VISITAR WEB
+              <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+            </a>
+            <p className="text-[10px] font-heading tracking-[0.2em] text-muted-foreground mt-3">ALINEASPAIN.VERCEL.APP</p>
+          </div>
         </div>
       </div>
     </section>
@@ -51,3 +77,4 @@ const PartnersSection = () => {
 };
 
 export default PartnersSection;
+
