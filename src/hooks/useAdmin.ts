@@ -62,29 +62,50 @@ export function useAdmin() {
   };
 
   const loginWithMaster = async (masterPassword: string) => {
-    const { data, error } = await supabase.functions.invoke("admin-setup", {
-      body: { master_password: masterPassword },
-    });
+    try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 10000);
 
-    if (error) return { error };
-    if (data?.error) return { error: { message: data.error } };
-
-    if (data?.session) {
-      setLoading(true);
-      setSession(data.session);
-      setIsAdmin(true);
-
-      supabase.auth.setSession({
-        access_token: data.session.access_token,
-        refresh_token: data.session.refresh_token,
-      }).catch(() => {
-        // Keep optimistic admin access; auth listener/getSession will reconcile.
-      }).finally(() => {
-        setLoading(false);
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-setup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ master_password: masterPassword }),
+        signal: controller.signal,
       });
-    }
 
-    return { data };
+      clearTimeout(timeout);
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        return { error: { message: data?.error || "Error de autenticación" } };
+      }
+
+      if (data?.error) return { error: { message: data.error } };
+
+      if (data?.session) {
+        setSession(data.session);
+        setIsAdmin(true);
+        setLoading(false);
+
+        void supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+      }
+
+      return { data };
+    } catch (error) {
+      const message = error instanceof Error
+        ? error.name === "AbortError"
+          ? "El login admin tardó demasiado. Inténtalo otra vez."
+          : error.message
+        : "Error de autenticación";
+      return { error: { message } };
+    }
   };
 
   return { session, isAdmin, loading, signOut, loginWithMaster };

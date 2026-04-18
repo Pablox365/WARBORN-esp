@@ -70,9 +70,13 @@ const AdminLogin = ({ loginWithMaster }: { loginWithMaster: (pw: string) => Prom
     e.preventDefault();
     setError("");
     setLoading(true);
-    const { error } = await loginWithMaster(password);
-    if (error) setError(error.message ?? "Error de autenticación");
-    setLoading(false);
+
+    try {
+      const { error } = await loginWithMaster(password);
+      if (error) setError(error.message ?? "Error de autenticación");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
