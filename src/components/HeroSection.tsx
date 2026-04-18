@@ -79,7 +79,7 @@ const HeroSection = () => {
                 alt="Warborn"
                 width={520}
                 height={200}
-                className="relative h-40 sm:h-56 md:h-72 lg:h-96 xl:h-[28rem] w-auto animate-float transition-transform duration-500 group-hover:scale-105 py-0 my-0 px-0 mx-0 -ml-2 md:-ml-4"
+                className="relative h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 w-auto animate-float transition-transform duration-500 group-hover:scale-105 py-0 my-0 px-0 mx-0"
               />
             </div>
           </div>
