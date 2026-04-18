@@ -74,15 +74,12 @@ const HeroSection = () => {
             }`}
           >
             <div className="relative group">
-              {/* Glow detrás del logo */}
-              <div className="absolute -inset-8 bg-primary/20 rounded-full blur-3xl opacity-60 group-hover:opacity-100 transition-opacity animate-glow-pulse" />
-              <div className="absolute -inset-4 bg-primary/10 rounded-full blur-2xl" />
               <img
                 src={warbornNormal}
                 alt="Warborn"
                 width={520}
                 height={200}
-                className="relative h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 w-auto animate-float transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_0_30px_hsl(142_70%_45%/0.6)]"
+                className="relative h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 w-auto animate-float transition-transform duration-500 group-hover:scale-105"
               />
             </div>
           </div>
