@@ -42,7 +42,11 @@ const FeedbackSection = () => {
       if (!parsed.success) {
         throw new Error(parsed.error.issues[0].message);
       }
-      const { error } = await supabase.from("feedback").insert(parsed.data);
+      const { error } = await supabase.from("feedback").insert({
+        name: parsed.data.name,
+        rating: parsed.data.rating,
+        message: parsed.data.message,
+      });
       if (error) throw error;
     },
     onSuccess: () => {
